@@ -1,0 +1,88 @@
+ // client/app.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const patientForm = document.getElementById('patient-form');
+    const patientsDataBody = document.getElementById('patients-data');
+    const messageArea = document.getElementById('message-area');
+    const API_BASE_URL = '/api/patients'; 
+
+    // === 1. GET Function: Records Display Karein ===
+    async function fetchPatients() {
+        try {
+            const response = await fetch(API_BASE_URL);
+            if (!response.ok) { throw new Error('Failed to fetch patient records'); }
+            
+            const patients = await response.json();
+            renderPatients(patients);
+
+        } catch (error) {
+            showMessage(Error: Records load nahi ho sake. ${error.message}, 'error');
+        }
+    }
+
+    function renderPatients(patients) {
+        patientsDataBody.innerHTML = ''; 
+        if (patients.length === 0) {
+            patientsDataBody.innerHTML = '<tr><td colspan="5">Koi records maujood nahi.</td></tr>';
+            return;
+        }
+
+        patients.forEach(patient => {
+            const row = patientsDataBody.insertRow();
+            row.insertCell().textContent = patient.name;
+            row.insertCell().textContent = patient.email;
+            row.insertCell().textContent = patient.contactNumber || 'N/A';
+            row.insertCell().textContent = patient.appointments ? patient.appointments.length : 0;
+            
+            const actionCell = row.insertCell();
+            const viewButton = document.createElement('button');
+            viewButton.textContent = 'View Details';
+            actionCell.appendChild(viewButton);
+        });
+    }
+
+    // === 2. POST Function: Naya Record Server Par Bhejein ===
+    patientForm.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const contactNumber = document.getElementById('contact').value.trim();
+
+        if (!name || !email) { showMessage('Naam aur Email lazmi hai.', 'error'); return; }
+        
+        const newPatient = { name, email, contactNumber, appointments: [] };
+
+        try {
+            const response = await fetch(API_BASE_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newPatient)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) { throw new Error(data.message || 'Error saving record'); }
+
+            showMessage('✅ Patient record successfully save ho gaya!', 'success');
+            patientForm.reset();
+            fetchPatients(); 
+
+        } catch (error) {
+            showMessage(❌ Error: Record save nahi ho saka. ${error.message}, 'error');
+        }
+    });
+
+    // Utility Function: Messages Display Karein
+    function showMessage(msg, type) {
+        messageArea.textContent = msg;
+        messageArea.className = type;
+        setTimeout(() => {
+            messageArea.textContent = '';
+            messageArea.className = '';
+        }, 5000); 
+    }
+
+    // Initialization
+    fetchPatients(); 
+});

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Patient System Dashboard</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <header>
+        <h1>Smart Patient Record & Reminder System</h1>
+    </header>
+    <main>
+        <section id="add-patient">
+            <h2>Naya Patient Record Add Karein</h2>
+            <form id="patient-form">
+                <input type="text" id="name" placeholder="Patient Name" required>
+                <input type="email" id="email" placeholder="Email Address" required>
+                <input type="text" id="contact" placeholder="Contact Number">
+                <button type="submit">Record Save Karein</button>
+            </form>
+            <p id="message-area"></p> 
+        </section>
+
+        <hr>
+
+        <section id="patient-list-container">
+            <h2>Maujooda Patient Records</h2>
+            <table id="patient-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Appointments (Total)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="patients-data"> 
+                    <tr><td colspan="5">Loading records...</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    <script src="app.js"></script> 
+</body>
+</html>

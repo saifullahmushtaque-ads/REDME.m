@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Smart Patient System - Demo</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; }
+input, button { padding: 8px; margin: 4px 0; }
+.card { border: 1px solid #ddd; padding: 12px; margin-bottom: 12px; border-radius: 6px; }
+</style>
+</head>
+<body>
+<h2>Smart Patient System — Demo UI</h2>
+<div class="card">
+<h3>Create Patient</h3>
+<input id="first_name" placeholder="First name" /> <input id="last_name" placeholder="Last name" /><br>
+<input id="email" placeholder="Email" /> <input id="phone" placeholder="Phone (E.164)" /><br>
+<button id="createPatient">Create Patient</button>
+</div>
+
+
+<div class="card">
+<h3>Create Appointment</h3>
+<input id="patient_id" placeholder="Patient ID" /> <input id="appt_dt" placeholder="Appointment ISO datetime (e.g. 2025-10-16T14:30:00)" /> <br>
+<input id="appt_type" placeholder="Type (consultation/lab)" /> <br>
+<button id="cr
